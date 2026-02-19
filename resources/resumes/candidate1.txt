@@ -1,0 +1,3 @@
+Name: User1
+Skills: Java, Python, HTML, CSS, SQL
+Experience: Internship in web development and database management.

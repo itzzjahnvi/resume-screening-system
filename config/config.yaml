@@ -1,0 +1,3 @@
+resume_directory: resources/resumes
+job_description: resources/job_desc.txt
+shortlist_threshold: 60
