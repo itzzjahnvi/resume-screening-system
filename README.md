@@ -1,107 +1,99 @@
-Resume Screening System
+# Resume Screening System
 
-A Resume Screening System that evaluates candidate resumes against a job description using TF-IDF vectorization and cosine similarity.
+A Python-based Resume Screening System that automates resume parsing, skill extraction, and candidate ranking. This system calculates a match score for each candidate against a job description and identifies skill gaps, helping recruiters and hiring managers save time and make data-driven decisions.
 
-This project is designed using a layered architecture with clear separation of concerns, making it suitable for internal HR tools, automation workflows, and further API/web integration.
+## Table of Contents
 
-# Features
+* Features
+* Project Structure
+* Installation
+* Usage
+* Future Enhancements
+* Notes
 
-- Supports multiple resume formats:
-   PDF
-   DOCX
-   TXT
-- Automatic text cleaning and normalization
-- TF-IDF based similarity scoring
-- Skill extraction
-- Config-driven setup
-- Error handling 
-- Easily extendable to REST API or Web App
+## Features
 
-# Project Structure
+* Automatically parses multiple resumes from a folder
+* Extracts skills from resumes
+* Compares resumes to job descriptions using TF-IDF similarity
+* Shows skills found and missing skills (skill gap)
+* Ranks resumes based on match score
+* Supports TXT resumes (PDF/DOCX optional)
 
+## Project Structure
+
+```text
 RESUME-SCREENING-SYSTEM/
-│
-├── app/
-│ ├── resume_reader.py
-│ ├── similarity.py
-│ ├── skill_extractor.py
-│ └── engine.py
-│
-├── config/
-│ └── config.yaml
-│
-├── resources/
-│ ├── job_desc.txt
-│ └── resumes/
-│
-├── tests/
-│ └── test_engine.py
-│
-├── main.py # Entry point
+├── data/
+│   ├── job_description.txt      # Job description file
+│   └── resumes/
+│       ├── sample_resume.txt    # Example resumes
+│       └── candidate1.txt
+├── src/
+│   ├── main.py                  # Main script
+│   ├── matcher.py               # TF-IDF similarity functions
+│   ├── resume_parser.py         # Extracts text from resumes
+│   ├── skill_extractor.py       # Extracts skills from text
+│   └── test_run.py              # Script to run resume screening
+├── .gitignore
 ├── requirements.txt
 └── README.md
+```
 
-* Installation
+## Installation
 
-1. Clone the repository:
+Clone the repository:
 
-git clone https://github.com/itzzjahnvi/resume-screening-system.git
-cd resume-screening-system
-Create virtual environment:
+```bash
+git clone <YOUR_GITHUB_REPO_URL>
+cd RESUME-SCREENING-SYSTEM
+```
 
-python -m venv venv
-venv\Scripts\activate
 Install dependencies:
 
+```bash
 pip install -r requirements.txt
-# Configuration
-Edit the file:
-config/config.yaml
+```
 
-Example:
-resume_directory: resources/resumes
-job_description: resources/job_desc.txt
-shortlist_threshold: 60
-No changes in core code.
+Requirements (`requirements.txt`):
 
-* For  Running from the project root directory:
-
-python main.py
-The system will:
-Read all resumes from the configured directory
-Compare them against the job description
-Calculate similarity score
-Extract relevant skills
-Print shortlisted candidates
-
-* Running Tests
-From project root:
-
-python -m tests.test_engine
-How It Works
-Resume Reader
-Extracts text from PDF, DOCX, and TXT files
-Cleans and normalizes content
-Similarity Engine
-Converts resume and job description to TF-IDF vectors
-Skill Extractor
-Detects predefined technical skills
-Engine Layer
-Ensures error isolation per resume
-
-# Error Handling
-Corrupted PDFs do not stop execution
-Unsupported file formats are skipped
-Empty resumes return zero similarity
-System continues processing remaining files
-
-# Dependencies
-scikit-learn
+```text
 pdfplumber
 python-docx
-pyyaml
+scikit-learn
+nltk
+```
 
-# Future Improvements
-REST API (FastAPI)
-CSV/Excel export
+> Note: Currently, TXT resumes are fully supported. PDF/DOCX support works with valid files.
 
+## Usage
+
+Place your job description in `data/job_description.txt`.
+
+Add resumes in `data/resumes/` (TXT format recommended).
+
+Run the test script:
+
+```bash
+python src/test_run.py
+```
+
+### The script outputs:
+
+* Resume name
+* Match score (%)
+* Skills found
+* Missing skills (skill gap)
+
+## Future Enhancements
+
+* Add full PDF/DOCX support
+* GUI interface for non-technical users
+* Save results to CSV or Excel for reporting
+* Enhance skill extraction with NLP and synonyms
+* Add weighting for critical vs optional skills
+
+## Notes
+
+* Ensure that skills in resumes match the `SKILLS` list in `skill_extractor.py`.
+* Multi-word skills like `"machine learning"` must be written with a space.
